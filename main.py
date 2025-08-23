@@ -64,16 +64,51 @@ def evaluate_guess(secret, guess):
 
     return correct_position, correct_number
 
-if __name__ == '__main__':
+def main():
     secret = generate_code()
-    print('Generated secret code:', secret)
+    print('Welcome to Matermind! Guess the 4-digit code(numbers 0-7).')
+    attempts = 10
+    history = []
 
-    guesses = [
-        [0, 0, 0, 0],
-        [secret[0], secret[1], 0, 0],
-        secret
-    ]
+    for attempt in range(1, attempts + 1):
+        while True:
+            user_input = input(f'\nAttempt {attempt}/{attempts}: Enter 4 numbers separated by spaces: ')
+            try:
+                guess = [int(x) for x in user_input.strip().split()]
+                if len(guess) != 4 or any(x < 0 or x > 7 for x in guess):
+                    raise ValueError
+                break
+            except ValueError:
+                print('Invalid input. Enter exactly 4 numbers from 0 to 7 separated by spaces.')
 
-    for guess in guesses:
-        pos, num = evaluate_guess(secret, guess)
-        print(f'Guess: {guess} -> {pos} correct position, {num} correct number')
+        correct_pos, correct_num = evaluate_guess(secret, guess)
+        history.append((guess, correct_pos, correct_num))
+
+        print(f"Feedback: {correct_pos} correct position(s), {correct_num} correct number(s) in wrong position")
+        print('History:')
+        for h in history:
+            print(f'  Guess: {h[0]} -> {h[1]} correct position, {h[2]} correct number')
+
+        if correct_pos == 4:
+            print('\nCongratulations! You guessed the code!')
+            break
+    
+    else:
+        print('\n Game Over! You ran out of attempts.')
+        print(f'The secret code was {secret}')
+
+if __name__ == '__main__':
+    main()
+
+    # secret = generate_code()
+    # print('Generated secret code:', secret)
+
+    # guesses = [
+    #     [0, 0, 0, 0],
+    #     [secret[0], secret[1], 0, 0],
+    #     secret
+    # ]
+
+    # for guess in guesses:
+    #     pos, num = evaluate_guess(secret, guess)
+    #     print(f'Guess: {guess} -> {pos} correct position, {num} correct number')
