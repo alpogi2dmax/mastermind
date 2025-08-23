@@ -41,8 +41,8 @@ def evaluate_guess(secret, guess):
     return correct_position, correct_number
 
 def main():
-    # secret = generate_code()
-    secret = [0, 1, 3, 5]
+    secret = generate_code()
+    # secret = [0, 1, 3, 5]
     print('Welcome to Matermind! Guess the 4-digit code(numbers 0-7).')
     attempts = 10
     history = []
