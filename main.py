@@ -26,46 +26,23 @@ def evaluate_guess(secret, guess):
 
     if len(secret) != len(guess):
         raise ValueError('Guess and secret must be the same length')
-    
-    # correct_position = sum(s == g for s, g in zip(secret, guess))
-
-    # secret_counts = {}
-    # guess_counts = {}
-
-    # for s, g in zip(secret, guess):
-    #     secret_counts[s] = secret_counts.get(s, 0) + 1
-    #     guess_counts[g] = guess_counts.get(g, 0) + 1
-
-    # total_correct = sum(min(secret_counts.get(num, 0), guess_counts.get(num, 0)) for num in guess_counts)
-
-    # correct_number = total_correct - correct_position
 
     correct_position = 0
     correct_number = 0
+    prev_guess = []
 
-    # Make copies to mark used numbers
-    secret_copy = secret.copy()
-    guess_copy = guess.copy()
-    
-    # First pass: exact matches
     for i in range(len(guess)):
         if guess[i] == secret[i]:
             correct_position += 1
-            secret_copy[i] = guess_copy[i] = None  # mark as used
-
-    print(secret_copy)
-    print(guess_copy)
-    
-    # Second pass: correct numbers in wrong positions
-    for i in range(len(guess_copy)):
-        if guess_copy[i] is not None and guess_copy[i] in secret_copy:
+        if guess[i] in secret and guess[i] not in prev_guess:
             correct_number += 1
-            secret_copy[secret_copy.index(guess_copy[i])] = None  # mark as used
+            prev_guess.append(guess[i])
 
     return correct_position, correct_number
 
 def main():
-    secret = generate_code()
+    # secret = generate_code()
+    secret = [0, 1, 3, 5]
     print('Welcome to Matermind! Guess the 4-digit code(numbers 0-7).')
     attempts = 10
     history = []
@@ -84,10 +61,14 @@ def main():
         correct_pos, correct_num = evaluate_guess(secret, guess)
         history.append((guess, correct_pos, correct_num))
 
-        print(f"Feedback: {correct_pos} correct position(s), {correct_num} correct number(s) in wrong position")
+        if (correct_pos == 0 and correct_num == 0):
+            print(f'Feedback: all incorrect')
+        else:
+            print(f"Feedback: {correct_num} correct number and {correct_pos} correct location")
+        
         print('History:')
         for h in history:
-            print(f'  Guess: {h[0]} -> {h[1]} correct position, {h[2]} correct number')
+            print(f'  Guess: {h[0]} -> {h[2]} correct number and {h[1]} correct location')
 
         if correct_pos == 4:
             print('\nCongratulations! You guessed the code!')
