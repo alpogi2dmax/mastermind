@@ -5,6 +5,7 @@ class Settings(Resource):
     def get (self):
         settings = {
             'num': DEFAULT_PARAMS['num'],
+            'min': DEFAULT_PARAMS['min'],
             'max': DEFAULT_PARAMS['max']
         }
 
