@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_restful import Api, Resource
 from flask_cors import CORS
 import requests
+import random
 
 app = Flask(__name__)
 # CORS(app)
@@ -14,27 +15,39 @@ GAME = {
     'attempts': 0,
     'max_attempts': 10,
     'finished': False,
+    'hint': [],
     'last_evaluation': {}
 }
 
+PARAMS = {
+    'num': 4,
+    'min': 0,
+    'max': 7,
+    'col': 1,
+    'base': 10,
+    'format': 'plain',
+    'rnd': 'new'
+}
+
 class GenerateCode(Resource):
-    def get(self):
-        # global SECRET_CODE
+    def post(self):
+        
+        data = request.get_json()
+        settings = data.get('settings', PARAMS)
+
+        if settings['num'] > 8:
+            return {'Error': 'Number of digits should not exceed 8'}, 400
+
+        PARAMS['num'] = settings.get('num', PARAMS['num'])
+        PARAMS['max'] = settings.get('max', PARAMS['max'])
+
         url = 'https://random.org/integers/'
-        params = {
-            'num': 4,
-            'min': 0,
-            'max': 7,
-            'col': 1,
-            'base': 10,
-            'format': 'plain',
-            'rnd': 'new'
-        }
+        
 
         try:
             response = requests.get(
                 url, 
-                params=params, 
+                params=PARAMS, 
                 headers={"User-Agent":"mastermind-game/1.0"}, 
                 timeout=5
                 )
@@ -44,6 +57,7 @@ class GenerateCode(Resource):
             GAME['history'] = []
             GAME['attempts'] = 0
             GAME['finished'] = False
+            GAME['hint'] = ['__' for n in response.text.strip().split('\n')]
             GAME['last_evaluation'] = {}
             return GAME, 200
         except requests.RequestException as e:
@@ -88,9 +102,41 @@ class EvaluateGuess(Resource):
 
         return GAME, 200
 
+class GetHint(Resource):
+    def get(self):
+        blank_index = [i for i, val in enumerate(GAME['hint']) if val == '__']
+
+        if not blank_index:
+            return {'error': 'No more hints available'}, 400
+        
+        pos = random.choice(blank_index)
+
+        GAME['hint'][pos] = GAME['secret'][pos]
+
+        if len(blank_index) == 1:
+            GAME['finished'] = True
+
+        
+        return GAME, 200
+
+class Settings(Resource):
+    def get(self):
+        max = PARAMS['max']
+        num = PARAMS['num']
+    
+        settings = {
+            'max': max,
+            'num': num
+        }
+
+        return settings, 200
+
+
 
 api.add_resource(GenerateCode, '/api/generate')
 api.add_resource(EvaluateGuess, '/api/evaluate')
+api.add_resource(GetHint, '/api/gethint')
+api.add_resource(Settings, '/api/settings')
 
 if __name__ == '__main__':
     app.run(debug=True)
