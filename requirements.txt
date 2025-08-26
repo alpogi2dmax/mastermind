@@ -7,4 +7,4 @@ Flask-SQLAlchemy==3.0.5
 Flask-Migrate==4.0.4
 SQLAlchemy==2.0.29
 marshmallow==3.21.1
-marshmallow-sqlalchemy==0.29.1
+marshmallow-sqlalchemy==0.30.0
