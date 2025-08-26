@@ -13,6 +13,8 @@ class GetHint(Resource):
 
         GAME['hint'][pos] = GAME['secret'][pos]
 
+        GAME['attempts'] += 1
+
         if (len(blank_index)) == 1:
             GAME['finished'] = True
         
