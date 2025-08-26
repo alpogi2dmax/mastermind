@@ -6,4 +6,5 @@ gunicorn==23.0.0
 Flask-SQLAlchemy==3.0.5
 Flask-Migrate==4.0.4
 SQLAlchemy==2.0.29
-SQLAlchemy-Serializer==1.4.22
+marshmallow==3.21.1
+marshmallow-sqlalchemy==0.30.1

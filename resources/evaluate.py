@@ -4,7 +4,11 @@ from game import GAME
 from config import DEFAULT_PARAMS, PARAMS
 from models import Score
 from extensions import db
+from schema import ScoreSchema
 import time
+
+score_schema = ScoreSchema()
+scores_schema = ScoreSchema(many=True)
 
 class EvaluateGuess(Resource):
     def post(self):

@@ -1,8 +1,8 @@
 from extensions import db
-from sqlalchemy_serializer import SerializerMixin
+# from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
 
-class Score(db.Model, SerializerMixin):
+class Score(db.Model):
     __tablename__ = 'scores'
 
     id = db.Column(db.Integer, primary_key=True)

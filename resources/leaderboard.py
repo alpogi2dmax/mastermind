@@ -3,7 +3,10 @@ from flask import request
 import requests
 from game import GAME, reset_game
 from config import DEFAULT_PARAMS, PARAMS
+from schema  import ScoreSchema
 from models import Score
+
+score_schema = ScoreSchema(many=True)
 
 
 class GetLeaderboard(Resource):
@@ -13,5 +16,5 @@ class GetLeaderboard(Resource):
             scores = (
                 Score.query.filter_by(difficulty=difficulty).order_by(Score.elapsed_time.asc()).limit(10).all()
             )
-            leaderboard[difficulty] = [s.to_dict() for s in scores]
+            leaderboard[difficulty] = score_schema.dump(scores)
         return leaderboard, 200
