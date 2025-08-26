@@ -2,6 +2,8 @@ from flask_restful import Resource
 from flask import request
 from game import GAME
 from config import DEFAULT_PARAMS, PARAMS
+from models import Score
+from extensions import db
 import time
 
 class EvaluateGuess(Resource):
@@ -37,12 +39,24 @@ class EvaluateGuess(Resource):
 
         GAME['attempts'] += 1
 
-        if correct_location == len(GAME['secret']) or GAME['attempts'] >= GAME['max_attempts']:
+        if correct_location == len(GAME['secret']):
             GAME['finished'] = True
             GAME['end_time'] = time.time()
             GAME['elapsed_time'] = round(GAME['end_time'] - GAME['start_time'], 2)
-            print(GAME['start_time'])
-            print(GAME['elapsed_time'])
-            print(GAME['end_time'])
+
+            
+            new_score = Score(
+                player_name = GAME['player'],
+                difficulty = GAME.get('difficulty', 'Normal'),
+                attempts=GAME['attempts'],
+                elapsed_time=GAME['elapsed_time']
+            )
+            db.session.add(new_score)
+            db.session.commit()
+        
+        elif GAME['attempts'] >= GAME['max_attempts']:
+            GAME['finished'] = True
+            GAME['end_time'] = time.time()
+            GAME['elapsed_time'] = round(GAME['end_time'] - GAME['start_time'], 2)
 
         return GAME, 200

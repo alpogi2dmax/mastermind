@@ -4,11 +4,12 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import DB_URI
+from extensions import db, migrate
 import requests
 import random
 
-db = SQLAlchemy()
-migrate = Migrate()
+# db = SQLAlchemy()
+# migrate = Migrate()
 
 def create_app():
 
