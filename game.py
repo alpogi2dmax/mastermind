@@ -10,10 +10,12 @@ GAME = {
     'last_evaluation': {},
     'start_time': None,
     'end_time': None,
-    'elapsed_time': None
+    'elapsed_time': None,
+    'difficulty': 'Normal',
+    'player': ''
 }
 
-def reset_game(secret_code):
+def reset_game(secret_code, difficulty, player):
     GAME['secret'] = secret_code
     GAME['history'] = []
     GAME['attempts'] = 0
@@ -23,3 +25,5 @@ def reset_game(secret_code):
     GAME['start_time'] = time.time()
     GAME['end_time'] = None
     GAME['elapsed_time'] = None
+    GAME['difficulty'] = difficulty
+    GAME['player'] = player

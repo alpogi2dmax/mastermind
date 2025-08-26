@@ -8,6 +8,8 @@ from config import DEFAULT_PARAMS, PARAMS
 class GenerateCode(Resource):
     def post(self):
         data = request.get_json()
+        difficulty = data.get('difficulty')
+        player = data.get('player')
         settings = data.get('settings', PARAMS)
 
         if settings['num'] > 8 or settings['num'] < 3:
@@ -31,7 +33,7 @@ class GenerateCode(Resource):
             response.raise_for_status()
 
             secret_code = [int(n) for n in response.text.strip().split('\n')]
-            reset_game(secret_code)
+            reset_game(secret_code, difficulty, player)
 
             return GAME, 200
         

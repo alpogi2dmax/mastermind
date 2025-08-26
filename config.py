@@ -9,3 +9,5 @@ DEFAULT_PARAMS = {
 }
 
 PARAMS = DEFAULT_PARAMS.copy()
+
+DB_URI = 'sqlite:///leaderboard.db'
