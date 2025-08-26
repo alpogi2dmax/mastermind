@@ -28,6 +28,7 @@ def create_app():
     from resources.evaluate import EvaluateGuess
     from resources.hint import GetHint
     from resources.settings import Settings
+    from resources.leaderboard import GetLeaderboard
 
     api = Api(app)
 
@@ -35,6 +36,7 @@ def create_app():
     api.add_resource(EvaluateGuess, '/api/evaluate')
     api.add_resource(GetHint, '/api/gethint')
     api.add_resource(Settings, '/api/settings')
+    api.add_resource(GetLeaderboard,'/api/getleaderboard')
 
     return app
 
