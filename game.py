@@ -22,4 +22,4 @@ def reset_game(secret_code):
     GAME['last_evaluation'] = {}
     GAME['start_time'] = time.time()
     GAME['end_time'] = None
-    GAME['elapsted_time'] = None
+    GAME['elapsed_time'] = None

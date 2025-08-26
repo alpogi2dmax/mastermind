@@ -40,6 +40,9 @@ class EvaluateGuess(Resource):
         if correct_location == len(GAME['secret']) or GAME['attempts'] >= GAME['max_attempts']:
             GAME['finished'] = True
             GAME['end_time'] = time.time()
-            GAME['elapsted_time'] = round(GAME['end_time'] - GAME['start_time'], 2)
+            GAME['elapsed_time'] = round(GAME['end_time'] - GAME['start_time'], 2)
+            print(GAME['start_time'])
+            print(GAME['elapsed_time'])
+            print(GAME['end_time'])
 
         return GAME, 200
