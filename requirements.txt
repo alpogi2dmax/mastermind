@@ -3,3 +3,4 @@ Flask-RESTful
 Flask-CORS
 requests
 gunicorn
+Flask-SQLAlchemy
