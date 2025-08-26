@@ -51,3 +51,17 @@ cd mastermind
 ```
 
 2. Create and activate a virtual envieronment:
+
+```bash
+python -m venv venv
+# Linux/macOS
+source venv/bin/activate
+# Windows
+venv\Scripts\activate
+```
+
+3.  Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
