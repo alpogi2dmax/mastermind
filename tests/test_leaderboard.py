@@ -26,10 +26,10 @@ def setup_scores(app):
     with app.app_context():
         Score.query.delete()
         scores = [
-            Score(player_name="Alice", difficulty="Easy", attempts=3, elapsed_time=15.2),
-            Score(player_name="Bob", difficulty="Easy", attempts=4, elapsed_time=20.0),
-            Score(player_name="Charlie", difficulty="Normal", attempts=2, elapsed_time=10.0),
-            Score(player_name="Dana", difficulty="Hard", attempts=5, elapsed_time=30.0),
+            Score(player_name="Leonardo", difficulty="Easy", attempts=3, elapsed_time=15.2),
+            Score(player_name="Michaelangelo", difficulty="Easy", attempts=4, elapsed_time=20.0),
+            Score(player_name="Raphael", difficulty="Normal", attempts=2, elapsed_time=10.0),
+            Score(player_name="Michaelangelo", difficulty="Hard", attempts=5, elapsed_time=30.0),
         ]
         db.session.add_all(scores)
         db.session.commit()
@@ -55,6 +55,6 @@ def test_get_leaderboard(client):
     
     # Check that scores are returned
     assert len(data['Easy']) == 2
-    assert data['Easy'][0]['player_name'] == "Alice"  # fastest first
+    assert data['Easy'][0]['player_name'] == "Leonardo"  # fastest first
     assert len(data['Normal']) == 1
     assert len(data['Hard']) == 1

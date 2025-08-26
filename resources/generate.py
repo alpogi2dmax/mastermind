@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import request
 import requests
 from game import GAME, reset_game
+import random
 from config import DEFAULT_PARAMS, PARAMS
 
 
@@ -37,5 +38,10 @@ class GenerateCode(Resource):
 
             return GAME, 200
         
-        except requests.RequestException as e:
-            return {'error': 'Failed to generate code', 'details': str(e)}, 500
+        except requests.RequestException:
+            secret_code = [
+                random.randint(PARAMS['min'], PARAMS['max']) for _ in range(PARAMS['num'])
+            ]
+            reset_game(secret_code, difficulty, player)
+
+            return GAME, 200

@@ -66,7 +66,7 @@ def test_evaluate_guess_invalid_digit(client):
 def test_evaluate_guess_correct(client):
     # Set secret code and player
     GAME['secret'] = [1,2,3,4]
-    GAME['player'] = "Alice"
+    GAME['player'] = "Alpogi"
     GAME['start_time'] = 1  # to avoid elapsed_time=0
     payload = {"guess": [1,2,3,4]}
     response = client.post("/api/evaluate", json=payload)

@@ -30,7 +30,7 @@ def test_generate_code_success(mock_get, client):
 
     payload = {
         'difficulty': 'easy',
-        'player': 'Alice',
+        'player': 'Alpogi',
         'settings': {'num': 4, 'min': 0, 'max': 6}
     }
 
@@ -45,7 +45,7 @@ def test_generate_code_success(mock_get, client):
 def test_generate_code_num_validation(client):
     payload = {
         'difficulty': 'easy',
-        'player': 'David',
+        'player': 'Alpogi',
         'settings': {'num': 9, 'min': 0, 'max': 6}
     }
 
@@ -58,7 +58,7 @@ def test_generate_code_num_validation(client):
 def test_generate_code_max_validation(client):
     payload = {
         "difficulty": "easy",
-        "player": "Alice",
+        "player": "Alpogi",
         "settings": {"num": 4, "max": 12}  # invalid max > 10
     }
 
@@ -69,17 +69,22 @@ def test_generate_code_max_validation(client):
     assert "error" in data
 
 @patch("resources.generate.requests.get")
-def test_generate_code_request_exception(mock_get, client):
+def test_generate_code_request_exception_fallback(mock_get, client):
     mock_get.side_effect = requests.RequestException("Connection error")
 
     payload = {
         "difficulty": "easy",
-        "player": "Alice",
-        "settings": {"num": 4, "max": 6}
+        "player": "Alpogi",
+        "settings": {"num": 4, "min": 0, "max": 6}
     }
 
     response = client.post("/api/generate", json=payload)
     data = response.get_json()
 
-    assert response.status_code == 500
-    assert "error" in data
+    assert response.status_code == 200
+    assert "secret" in data
+    assert isinstance(data["secret"], list)
+    assert len(data["secret"]) == 4
+    assert all(0 <= n <= 6 for n in data["secret"])
+    assert data["attempts"] == 0
+    assert data["finished"] is False
