@@ -48,5 +48,6 @@ This backend is designed to work with a separate frontend application built in *
 ```bash
 git clone git@github.com:alpogi2dmax/mastermind.git
 cd mastermind
+```
 
 2. Create and activate a virtual envieronment:
