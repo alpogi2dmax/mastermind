@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import request
 from game import GAME
 from config import DEFAULT_PARAMS, PARAMS
+import time
 
 class EvaluateGuess(Resource):
     def post(self):
@@ -38,5 +39,7 @@ class EvaluateGuess(Resource):
 
         if correct_location == len(GAME['secret']) or GAME['attempts'] >= GAME['max_attempts']:
             GAME['finished'] = True
+            GAME['end_time'] = time.time()
+            GAME['elapsted_time'] = round(GAME['end_time'] - GAME['start_time'], 2)
 
         return GAME, 200

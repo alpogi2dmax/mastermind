@@ -1,3 +1,5 @@
+import time
+
 GAME = {
     'secret': [],
     'history': [],
@@ -5,7 +7,10 @@ GAME = {
     'max_attempts': 10,
     'finished': False,
     'hint': [],
-    'last_evaluation': {}
+    'last_evaluation': {},
+    'start_time': None,
+    'end_time': None,
+    'elapsed_time': None
 }
 
 def reset_game(secret_code):
@@ -15,3 +20,6 @@ def reset_game(secret_code):
     GAME['finished'] = False
     GAME['hint'] = ['__' for _ in secret_code]
     GAME['last_evaluation'] = {}
+    GAME['start_time'] = time.time()
+    GAME['end_time'] = None
+    GAME['elapsted_time'] = None
