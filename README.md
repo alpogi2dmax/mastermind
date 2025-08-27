@@ -72,6 +72,8 @@ pip install -r requirements.txt
 python app.py
 ```
 
+---
+
 ## API Endpoints
 
 | Endpoint              | Method        | Description                               |
@@ -81,3 +83,52 @@ python app.py
 | /api/gethint          | GET           | Reveal a hint for the secret code         |
 | /api/settings         | GET           | Retrieve game settings                    |
 | /api/getleaderboard   | GET           | Get top 10 scores per difficulty          |
+
+
+---
+
+## Development Workflow
+
+1. Start the backend locally:
+
+```bash
+python app.py
+```
+
+2. Start the frontend (from the frontend repo):
+
+```bash
+npm install
+npm run dev
+```
+
+3. Open the frontend in our browser. It will communicate with the backend API automatically.
+
+---
+
+## Project Structure
+
+mastermind/
+│
+├─ app.py                  # Flask app entrypoint
+├─ config.py               # Default game settings & DB URI
+├─ extensions.py           # SQLAlchemy & Migrate instances
+├─ game.py                 # Global GAME object and reset logic
+├─ models.py               # Score model
+├─ schema.py               # Marshmallow schema for Score
+├─ resources/              # RESTful resources
+│   ├─ generate.py
+│   ├─ evaluate.py
+│   ├─ hint.py
+│   ├─ settings.py
+│   └─ leaderboard.py
+├─ tests/                  # Pytest test files
+└─ requirements.txt
+
+---
+
+## Notes
+
+- Uses erqwurests to fetch random integers from random.org for secret code generation.
+- GAME is a global object that stores current game state.
+- Leaderboard are stored in the database, adn the backend returns the top 10 scores per difficulty.
