@@ -65,3 +65,19 @@ venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 ```
+
+** Running the Server
+
+```bash
+python app.py
+```
+
+## API Endpoints
+
+| Endpoint              | Method        | Description                               |
+|-----------------------|---------------|-------------------------------------------|
+| /api/generate         | POST          | Generate a secret code for a new game     |
+| /api/evaluate         | POST          | Evaluate a player's guess                 |
+| /api/gethint          | GET           | Reveal a hint for the secret code         |
+| /api/settings         | GET           | Retrieve game settings                    |
+| /api/getleaderboard   | GET           | Get top 10 scores per difficulty          |
