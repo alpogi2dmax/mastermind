@@ -108,6 +108,7 @@ npm run dev
 
 ## Project Structure
 
+```
 mastermind/
 │
 ├─ app.py                  # Flask app entrypoint
@@ -124,6 +125,7 @@ mastermind/
 │   └─ leaderboard.py
 ├─ tests/                  # Pytest test files
 └─ requirements.txt
+```
 
 ---
 
