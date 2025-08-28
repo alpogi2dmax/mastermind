@@ -13,7 +13,10 @@ class GetHint(Resource):
 
         GAME['hint'][pos] = GAME['secret'][pos]
 
-        GAME['attempts'] += 1
+        if GAME['attempts'] == GAME['max_attempts'] - 1:
+            GAME['finished'] = True
+        else:
+            GAME['attempts'] += 1
 
         if (len(blank_index)) == 1:
             GAME['finished'] = True

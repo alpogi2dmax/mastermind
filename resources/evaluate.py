@@ -22,7 +22,7 @@ class EvaluateGuess(Resource):
             return {'error': 'Guess must have the same length as secret code.'}, 400
         
         if not all (isinstance(d, int) and PARAMS['min'] <= d <= PARAMS['max'] for d in guess):
-            return {'error': f"All digits must be integers between {PARAMS['min']} and {PARAMS['max']}"}
+            return {'error': f"All digits must be integers from {PARAMS['min']} to {PARAMS['max']}"}
         
         correct_location = 0
         correct_number = 0
