@@ -131,6 +131,6 @@ mastermind/
 
 ## Notes
 
-- Uses erqwurests to fetch random integers from random.org for secret code generation.
+- Uses requests to fetch random integers from random.org for secret code generation.
 - GAME is a global object that stores current game state.
 - Leaderboard are stored in the database, adn the backend returns the top 10 scores per difficulty.
